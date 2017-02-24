@@ -13,21 +13,31 @@ int branchNC=0;
 int branchP;
 int hashtable[64];
 
-void countlines (){
+void countlines ()
+{
 	std::string line;
 	std::ifstream input("branch_trace.dat");
-	while (std::getline(input, line)){
+
+	while (std::getline(input, line))
+	{
 		branches++;
 	}
-	input.close();
-}	
 
-bool checkhash(int branch){
-	if (hashtable[branch%64] < 2){ return false; }
-	else return true;
+	input.close();
 }
 
-void trace(){
+bool checkhash(int branch)
+{
+	if (hashtable[branch%64] < 2)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
+void trace()
+{
 	bool lastPath = true;
 	std::string branch;
 	std::string takeuntake;
@@ -38,57 +48,83 @@ void trace(){
 	int instruction;
 	int switchcase;
 
-	while (std::getline(input,branch,' ')){
+	while (std::getline(input,branch,' '))
+	{
 		std::getline(input,takeuntake,'\n');
 		instruction = atoi(branch.c_str());
 		hashed = checkhash(instruction);
-		if (takeuntake == "T"){correctpath=true;}
+
+		if (takeuntake == "T")
+		{
+			correctpath=true;
+		}
 		else correctpath=false;
 
-		if (hashed){ branchT++;}
-		if (!hashed){ branchN++;}
+		if (hashed)
+		{
+			branchT++;
+		}
 
-		if (hashed && correctpath){switchcase=0;}
-		else if (hashed && !correctpath){switchcase=1;}
-		else if ( !hashed && !correctpath){switchcase=2;}
-		else if ( !hashed && correctpath){switchcase=3;}
+		if (!hashed)
+		{
+			branchN++;
+		}
 
-		switch(switchcase){
+		if (hashed && correctpath)
+		{
+			switchcase=0;
+		}
+		else if (hashed && !correctpath)
+		{
+			switchcase=1;
+		}
+		else if ( !hashed && !correctpath)
+		{
+			switchcase=2;
+		}
+		else if (!hashed && correctpath)
+		{
+			switchcase=3;
+		}
+
+		switch(switchcase)
+		{
     			case 0:
        				branchTC++;
-				hashtable[instruction%64]++;
+							hashtable[instruction%64]++;
        				break;
     			case 1:
       				hashtable[instruction%64]--;
        				break;
     			case 2:
       				branchNC++;
-				hashtable[instruction%64]--;
+							hashtable[instruction%64]--;
        				break;
     			case 3:
       				hashtable[instruction%64]++;
        				break;
 		}
+
 		branches++;
 	}
-	input.close();
 
+	input.close();
 }
 
-void getpercent(){
-	//std::cout << branchTC << " " << branchNC << " " << branches << std::endl;
+void getpercent()
+{
 	double branchC = branchTC+branchNC;
 	double totalbranches = branches;
-	//std::cout << branchC+totalbranches << std::endl;
 	branchP = (branchC/totalbranches)*100;
 }
 
-int main(){
-	for (int i=0; i<64; i++){
+int main()
+{
+	for (int i=0; i<64; i++)
+	{
 		hashtable[i]=2;
 	}
 
-	//countlines();
 	trace();
 	getpercent();
 
@@ -98,6 +134,6 @@ int main(){
 	std::cout << "Number of branches not taken: " << branchN << std::endl;
 	std::cout << "	Number not taken branches correctly predicted: " << branchNC << std::endl << std::endl;
 	std::cout << "Overall rate of correct predictions: " << branchP << "%" << std::endl;
-	
+
 	return 0;
 }
