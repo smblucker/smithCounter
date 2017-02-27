@@ -1,4 +1,4 @@
-CFLAGS=-Wall -g
+CFLAGS=-Wall 
 
 smith_counter: smith.o
 	g++ -o smith_counter $(CFLAGS) smith.o
