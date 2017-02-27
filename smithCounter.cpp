@@ -20,7 +20,7 @@ namespace csci5814
 
         for (int i=0; i < 150; i++)
         {
-          table[i] = 2; 
+          table[i] = 2;
         }
     }
 
@@ -87,7 +87,7 @@ namespace csci5814
                correctpath=true;
                branchTakenCount++;
            }
-           else
+           else if (takeuntake == "N")
            {
                correctpath=false;
                branchNotTakenCount++;
