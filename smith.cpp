@@ -9,7 +9,8 @@
 using namespace std;
 using namespace csci5814;
 
-int main(){
+int main()
+{
 
 	smithCounter counter;
 	counter.trace();

@@ -20,7 +20,7 @@ namespace csci5814
 
         for (int i=0; i < 150; i++)
         {
-          table[i] = 2;
+          table[i] = 3; //changed from 2 to 3
         }
     }
 
@@ -52,13 +52,13 @@ namespace csci5814
     double smithCounter::getPercent()
     {
         double branchC = correctlyPredictedTakenBranches + correctlyPredictedNotTakenBranches;
-    	  double totalBranches = branches;
+    	double totalBranches = branches;
         return (branchC/totalBranches) * 100;
     }
 
     bool smithCounter::checkHash(int b)
     {
-        if (table[b%64] < 2)
+        if (table[b%4] < 2)
           return false;
         else
           return true;
@@ -66,7 +66,7 @@ namespace csci5814
 
     void smithCounter::trace()
     {
-      bool lastPath = true;
+        bool lastPath = true;
     	string branch;
     	string takeuntake;
 
@@ -77,61 +77,89 @@ namespace csci5814
     	int switchcase;
 
     	while (getline(input,branch,' '))
-      {
-    		getline(input,takeuntake,'\n');
-    		instruction = atoi(branch.c_str());
-    		hashed = checkHash(instruction);
+       {
+    	   getline(input,takeuntake,'\n');
+    	   instruction = atoi(branch.c_str());
+    	   hashed = checkHash(instruction);
 
-    		if (takeuntake == "T")
-        {
-          correctpath=true;
-        }
-        else
-          correctpath=false;
+    	   if (takeuntake == "T")
+           {
+               correctpath=true;
+           }
+           else
+               correctpath=false;
 
-    		if (hashed)
-        {
-          branchTakenCount++;
-        }
+    	   if (hashed)
+           {
+               branchTakenCount++;
+           }
 
-		    if (!hashed)
-        {
-          branchNotTakenCount++;
-        }
+		   if (!hashed)
+           {
+               branchNotTakenCount++;
+           }
 
-    		if (hashed && correctpath)
-        {
-          switchcase=0;
-        }
-    		else if (hashed && !correctpath)
-        {
-          switchcase=1;
-        }
-    		else if ( !hashed && !correctpath)
-        {
-          switchcase=2;
-        }
-    		else if ( !hashed && correctpath)
-        {
-          switchcase=3;
-        }
+    	   if (hashed && correctpath)
+           {
+               switchcase=0;
+           }
+    	   else if (hashed && !correctpath)
+           {
+               switchcase=1;
+           }
+    	   else if ( !hashed && !correctpath)
+           {
+               switchcase=2;
+           }
+    	   else if ( !hashed && correctpath)
+           {
+               switchcase=3;
+           }
 
-    		switch(switchcase)
-        {
-        	case 0:
-           	 correctlyPredictedTakenBranches++;
-    				 table[instruction%64]++;
-           	 break;
-        	case 1:
-          		table[instruction%64]--;
-           		break;
-        	case 2:
-          		correctlyPredictedNotTakenBranches++;
-    				  table[instruction%64]--;
-           		break;
-        	case 3:
-          		table[instruction%64]++;
-           		break;
+    	   switch(switchcase)
+           {
+        	   case 0:
+           	        correctlyPredictedTakenBranches++;
+
+                    if (table[instruction%4]==3)
+                        break;
+                    else
+                    {
+                        table[instruction%4]++;
+               	        break;
+                    }
+
+        	   case 1:
+
+                    if (table[instruction%4]==0)
+                        break;
+                    else
+                    {
+                        table[instruction%4]--;
+                		break;
+                    }
+
+        	   case 2:
+          		    correctlyPredictedNotTakenBranches++;
+
+                    if (table[instruction%4]==0)
+                        break;
+                    else
+                    {
+                        table[instruction%4]--;
+                    	break;
+                    }
+
+        	   case 3:
+
+                    if (table[instruction%4]==3)
+                        break;
+                    else
+                    {
+                        table[instruction%4]++;
+                		break;
+                    }
+
     		}
 
     		branches++;
