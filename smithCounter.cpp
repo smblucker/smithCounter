@@ -52,7 +52,7 @@ namespace csci5814
     double smithCounter::getPercent()
     {
         double branchC = correctlyPredictedTakenBranches + correctlyPredictedNotTakenBranches;
-    	double totalBranches = branches;
+    	  double totalBranches = branches;
         return (branchC/totalBranches) * 100;
     }
 
@@ -66,7 +66,7 @@ namespace csci5814
 
     void smithCounter::trace()
     {
-        bool lastPath = true;
+      bool lastPath = true;
     	string branch;
     	string takeuntake;
 
@@ -77,61 +77,61 @@ namespace csci5814
     	int switchcase;
 
     	while (getline(input,branch,' '))
-        {
+      {
     		getline(input,takeuntake,'\n');
     		instruction = atoi(branch.c_str());
     		hashed = checkHash(instruction);
 
     		if (takeuntake == "T")
-            {
-                correctpath=true;
-            }
-            else
-                correctpath=false;
+        {
+          correctpath=true;
+        }
+        else
+          correctpath=false;
 
     		if (hashed)
-            {
-                branchTakenCount++;
-            }
+        {
+          branchTakenCount++;
+        }
 
 		    if (!hashed)
-            {
-                branchNotTakenCount++;
-            }
+        {
+          branchNotTakenCount++;
+        }
 
     		if (hashed && correctpath)
-            {
-                switchcase=0;
-            }
+        {
+          switchcase=0;
+        }
     		else if (hashed && !correctpath)
-            {
-                switchcase=1;
-            }
+        {
+          switchcase=1;
+        }
     		else if ( !hashed && !correctpath)
-            {
-                switchcase=2;
-            }
+        {
+          switchcase=2;
+        }
     		else if ( !hashed && correctpath)
-            {
-                switchcase=3;
-            }
+        {
+          switchcase=3;
+        }
 
     		switch(switchcase)
-            {
-        			case 0:
-           				correctlyPredictedTakenBranches++;
-    				    table[instruction%64]++;
-           				break;
-        			case 1:
-          				table[instruction%64]--;
-           				break;
-        			case 2:
-          				correctlyPredictedNotTakenBranches++;
-    				    table[instruction%64]--;
-           				break;
-        			case 3:
-          				table[instruction%64]++;
-           				break;
+        {
+        	case 0:
+           	 correctlyPredictedTakenBranches++;
+    				 table[instruction%64]++;
+           	 break;
+        	case 1:
+          		table[instruction%64]--;
+           		break;
+        	case 2:
+          		correctlyPredictedNotTakenBranches++;
+    				  table[instruction%64]--;
+           		break;
+        	case 3:
+          		table[instruction%64]++;
+           		break;
     		}
 
     		branches++;
