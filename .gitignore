@@ -1,7 +1,5 @@
 #Ignore object and binary files
 
-a.*
-*.out
 *.h.gch
 *.o
 smith_counter
