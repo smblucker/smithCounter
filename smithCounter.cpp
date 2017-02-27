@@ -20,7 +20,7 @@ namespace csci5814
 
         for (int i=0; i < 150; i++)
         {
-          table[i] = 3; //changed from 2 to 3
+          table[i] = 2; 
         }
     }
 
@@ -58,7 +58,7 @@ namespace csci5814
 
     bool smithCounter::checkHash(int b)
     {
-        if (table[b%4] < 2)
+        if (table[b%16] < 2)
           return false;
         else
           return true;
@@ -85,17 +85,11 @@ namespace csci5814
     	   if (takeuntake == "T")
            {
                correctpath=true;
-           }
-           else
-               correctpath=false;
-
-    	   if (hashed)
-           {
                branchTakenCount++;
            }
-
-		   if (!hashed)
+           else
            {
+               correctpath=false;
                branchNotTakenCount++;
            }
 
@@ -121,42 +115,42 @@ namespace csci5814
         	   case 0:
            	        correctlyPredictedTakenBranches++;
 
-                    if (table[instruction%4]==3)
+                    if (table[instruction%16]==3)
                         break;
                     else
                     {
-                        table[instruction%4]++;
+                        table[instruction%16]++;
                	        break;
                     }
 
         	   case 1:
 
-                    if (table[instruction%4]==0)
+                    if (table[instruction%16]==0)
                         break;
                     else
                     {
-                        table[instruction%4]--;
+                        table[instruction%16]--;
                 		break;
                     }
 
         	   case 2:
           		    correctlyPredictedNotTakenBranches++;
 
-                    if (table[instruction%4]==0)
+                    if (table[instruction%16]==0)
                         break;
                     else
                     {
-                        table[instruction%4]--;
+                        table[instruction%16]--;
                     	break;
                     }
 
         	   case 3:
 
-                    if (table[instruction%4]==3)
+                    if (table[instruction%16]==3)
                         break;
                     else
                     {
-                        table[instruction%4]++;
+                        table[instruction%16]++;
                 		break;
                     }
 
