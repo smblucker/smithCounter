@@ -13,7 +13,7 @@ int main()
 {
 
 	smithCounter counter;
-	counter.trace();
+	counter.trackBranches();
 
 	cout << "Number of branches: " << counter.getBranches() << endl;
 	cout << "Number of branches taken: " << counter.getBranchTakenCount() << endl;

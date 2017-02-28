@@ -51,110 +51,92 @@ namespace csci5814
 
     double smithCounter::getPercent()
     {
-        double branchC = correctlyPredictedTakenBranches + correctlyPredictedNotTakenBranches;
-    	double totalBranches = branches;
-        return (branchC/totalBranches) * 100;
+        return ((double)(correctlyPredictedTakenBranches + correctlyPredictedNotTakenBranches)/(double)branches) * 100;
     }
 
-    bool smithCounter::checkHash(int b)
+    bool smithCounter::getPrediction(int counter)
     {
-        if (table[b%16] < 2)
-          return false;
+        if (table[counter%16] >= 2)
+            return true;
         else
-          return true;
+            return false;
     }
 
-    void smithCounter::trace()
+    void smithCounter::trackBranches()
     {
-        bool lastPath = true;
     	string branch;
-    	string takeuntake;
+    	string pathIdentifier;
 
     	ifstream input("branch_trace.dat");
-    	bool hashed;
-    	bool correctpath;
+    	bool counterValue;
+    	bool takenPath;
     	int instruction;
-    	int switchcase;
 
     	while (getline(input,branch,' '))
        {
-    	   getline(input,takeuntake,'\n');
+    	   getline(input,pathIdentifier,'\n');
     	   instruction = atoi(branch.c_str());
-    	   hashed = checkHash(instruction);
+    	   counterValue = getPrediction(instruction);
 
-    	   if (takeuntake == "T")
+    	   if (pathIdentifier == "T")
            {
-               correctpath=true;
+               takenPath=true;
                branchTakenCount++;
            }
-           else if (takeuntake == "N")
+           else if (pathIdentifier == "N")
            {
-               correctpath=false;
+               takenPath=false;
                branchNotTakenCount++;
            }
 
-    	   if (hashed && correctpath)
+           if (counterValue && takenPath)
            {
-               switchcase=0;
+               correctlyPredictedTakenBranches++;
+
+               if (table[instruction%16]==3)
+               {
+                   table[instruction%16]=3;
+               }
+               else
+               {
+                   table[instruction%16]++;
+               }
            }
-    	   else if (hashed && !correctpath)
+           else if (counterValue && !takenPath)
            {
-               switchcase=1;
+               if (table[instruction%16]==0)
+               {
+                   table[instruction%16]=0;
+               }
+               else
+               {
+                   table[instruction%16]--;
+               }
            }
-    	   else if ( !hashed && !correctpath)
+           else if (!counterValue && !takenPath)
            {
-               switchcase=2;
+               correctlyPredictedNotTakenBranches++;
+
+               if (table[instruction%16]==0)
+               {
+                   table[instruction%16]=0;
+               }
+               else
+               {
+                   table[instruction%16]--;
+               }
            }
-    	   else if ( !hashed && correctpath)
+           else if (!counterValue && takenPath)
            {
-               switchcase=3;
+               if (table[instruction%16]==3)
+               {
+                   table[instruction%16]=3;
+               }
+               else
+               {
+                   table[instruction%16]++;
+               }
            }
-
-    	   switch(switchcase)
-           {
-        	   case 0:
-           	        correctlyPredictedTakenBranches++;
-
-                    if (table[instruction%16]==3)
-                        break;
-                    else
-                    {
-                        table[instruction%16]++;
-               	        break;
-                    }
-
-        	   case 1:
-
-                    if (table[instruction%16]==0)
-                        break;
-                    else
-                    {
-                        table[instruction%16]--;
-                		break;
-                    }
-
-        	   case 2:
-          		    correctlyPredictedNotTakenBranches++;
-
-                    if (table[instruction%16]==0)
-                        break;
-                    else
-                    {
-                        table[instruction%16]--;
-                    	break;
-                    }
-
-        	   case 3:
-
-                    if (table[instruction%16]==3)
-                        break;
-                    else
-                    {
-                        table[instruction%16]++;
-                		break;
-                    }
-
-    		}
 
     		branches++;
     	}

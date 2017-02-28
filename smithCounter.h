@@ -20,8 +20,8 @@ namespace csci5814
         int getBranchNotTakenCount();
         int getCorrectlyPredictedNotTakenBranches();
         double getPercent();
-        bool checkHash(int b);
-        void trace();
+        bool getPrediction(int counter);
+        void trackBranches();
     };
 }
 
