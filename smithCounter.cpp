@@ -78,12 +78,12 @@ namespace csci5814
     	   instruction = atoi(branch.c_str());
     	   counterValue = getPrediction(instruction);
 
-    	   if (pathIdentifier == "T")
+    	   if (pathIdentifier.find('T') != std::string::npos)
            {
                takenPath=true;
                branchTakenCount++;
            }
-           else if (pathIdentifier == "N")
+           else if (pathIdentifier.find('N') != std::string::npos)
            {
                takenPath=false;
                branchNotTakenCount++;
