@@ -74,6 +74,11 @@ namespace csci5814
 
     	while (getline(input,branch,' '))
        {
+           if(input.eof())
+           {
+               break;
+           }
+           
     	   getline(input,pathIdentifier,'\n');
     	   instruction = atoi(branch.c_str());
     	   counterValue = getPrediction(instruction);
