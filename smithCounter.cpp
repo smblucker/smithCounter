@@ -20,7 +20,7 @@ namespace csci5814
 
         for (int i=0; i < 150; i++)
         {
-          table[i] = 2;
+          table[i] = 0;
         }
     }
 
@@ -56,7 +56,7 @@ namespace csci5814
 
     bool smithCounter::getPrediction(int counter)
     {
-        if (table[counter%16] >= 2)
+        if (table[(counter/4)%128] >= 2)
             return true;
         else
             return false;
@@ -78,7 +78,7 @@ namespace csci5814
            {
                break;
            }
-           
+
     	   getline(input,pathIdentifier,'\n');
     	   instruction = atoi(branch.c_str());
     	   counterValue = getPrediction(instruction);
@@ -98,48 +98,48 @@ namespace csci5814
            {
                correctlyPredictedTakenBranches++;
 
-               if (table[instruction%16]==3)
+               if (table[(instruction/4)%128]==3)
                {
-                   table[instruction%16]=3;
+                   table[(instruction/4)%128]=3;
                }
                else
                {
-                   table[instruction%16]++;
+                   table[(instruction/4)%128]++;
                }
            }
            else if (counterValue && !takenPath)
            {
-               if (table[instruction%16]==0)
+               if (table[(instruction/4)%128]==0)
                {
-                   table[instruction%16]=0;
+                   table[(instruction/4)%128]=0;
                }
                else
                {
-                   table[instruction%16]--;
+                   table[(instruction/4)%128]--;
                }
            }
            else if (!counterValue && !takenPath)
            {
                correctlyPredictedNotTakenBranches++;
 
-               if (table[instruction%16]==0)
+               if (table[(instruction/4)%128]==0)
                {
-                   table[instruction%16]=0;
+                   table[(instruction/4)%128]=0;
                }
                else
                {
-                   table[instruction%16]--;
+                   table[(instruction/4)%128]--;
                }
            }
            else if (!counterValue && takenPath)
            {
-               if (table[instruction%16]==3)
+               if (table[(instruction/4)%128]==3)
                {
-                   table[instruction%16]=3;
+                   table[(instruction/4)%128]=3;
                }
                else
                {
-                   table[instruction%16]++;
+                   table[(instruction/4)%128]++;
                }
            }
 
