@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Sean Blucker
+
 using namespace std;
 using namespace csci5814;
 

@@ -1,6 +1,8 @@
 #ifndef SMITHCOUNTER_H
 #define	SMITHCOUNTER_H
 
+//Sean Blucker
+
 #include<string>
 
 namespace csci5814

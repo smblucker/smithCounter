@@ -1,7 +1,7 @@
 #include "stats.h"
 #include<iostream>
 
-//using namespace std;
+//Sean Blucker
 
 namespace csci5814
 {

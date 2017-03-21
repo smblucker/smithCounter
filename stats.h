@@ -1,6 +1,8 @@
 #ifndef STATS_H
 #define	STATS_H
 
+//Sean Blucker
+
 namespace csci5814
 {
     class Stats
