@@ -1,27 +1,18 @@
 #ifndef SMITHCOUNTER_H
 #define	SMITHCOUNTER_H
 
+#include<string>
+
 namespace csci5814
 {
-    class smithCounter
+    class SmithCounter
     {
     private:
-        int branches;
-        int branchTakenCount;
-        int correctlyPredictedTakenBranches;
-        int branchNotTakenCount;
-        int correctlyPredictedNotTakenBranches;
-        int table[150];
+        int prediction;
     public:
-        smithCounter();
-        int getBranches();
-        int getBranchTakenCount();
-        int getCorrectlyPredictedTakenBranches();
-        int getBranchNotTakenCount();
-        int getCorrectlyPredictedNotTakenBranches();
-        double getPercent();
-        bool getPrediction(int counter);
-        void trackBranches();
+        SmithCounter();
+        bool getPrediction();
+        void updatePrediction(std::string takenBranch);
     };
 }
 
